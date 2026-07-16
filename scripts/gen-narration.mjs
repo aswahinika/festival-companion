@@ -30,8 +30,12 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = resolve(root, 'assets', 'audio', 'narration');
 const dataFile = resolve(root, 'data', 'festivals.json');
 
+// --dry-run: validate the plan (festivals, languages, chunking) without a key
+// or any API calls — nothing is written.
+const DRY = process.argv.includes('--dry-run');
+
 const API_KEY = process.env.GOOGLE_TTS_API_KEY;
-if (!API_KEY) {
+if (!API_KEY && !DRY) {
   console.error(
     'Missing GOOGLE_TTS_API_KEY. See the setup notes at the top of this file.'
   );
@@ -121,9 +125,19 @@ for (const f of data.festivals) {
     const narrative = [c.title, c.story, c.rituals, c.importance]
       .filter(Boolean)
       .join('. ');
+    const chunks = chunkText(narrative);
+
+    if (DRY) {
+      console.log(
+        `• ${f.id} [${lang}] via ${voice.name}: ${chunks.length} chunk(s), ${bytes(narrative)} bytes`
+      );
+      made++;
+      continue;
+    }
+
     try {
       const parts = [];
-      for (const chunk of chunkText(narrative)) {
+      for (const chunk of chunks) {
         parts.push(await synth(chunk, voice));
       }
       const rel = `assets/audio/narration/${f.id}-${lang}.mp3`;
@@ -135,6 +149,13 @@ for (const f of data.festivals) {
       console.error(`✗ ${f.id} [${lang}]: ${err.message}`);
     }
   }
+}
+
+if (DRY) {
+  console.log(
+    `\nDry run: would generate ${made} file(s) for [${LANGS.join(', ')}]. No key used, nothing written.`
+  );
+  process.exit(0);
 }
 
 await writeFile(dataFile, JSON.stringify(data, null, 2) + '\n', 'utf8');
