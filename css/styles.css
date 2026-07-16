@@ -266,16 +266,26 @@ h1 {
   height: 64px;
 }
 
+/* Photos (custom JPGs): keep their natural aspect ratio, capped in height and
+   centered, so portrait/square images are never stretched. */
 .festival-image {
   display: block;
-  width: 100%;
+  max-width: 100%;
+  width: auto;
   height: auto;
-  aspect-ratio: 800 / 380; /* reserve space to avoid layout shift while loading */
+  max-height: 360px;
   margin: 0 auto 14px;
   border-radius: 14px;
   border: 1px solid var(--line);
   box-shadow: 0 3px 12px rgba(122, 32, 72, 0.08);
   background: var(--cream);
+}
+/* Generated SVG banners are wide by design: fill the width at a fixed ratio
+   (also reserves space to avoid layout shift). */
+.festival-image[src$='.svg'] {
+  width: 100%;
+  max-height: none;
+  aspect-ratio: 800 / 380;
 }
 
 .festival-title {

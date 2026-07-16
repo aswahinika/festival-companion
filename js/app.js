@@ -330,7 +330,7 @@ function render() {
   const banner = el('img', {
     class: 'festival-image',
     src: artSrc,
-    alt: `${content.title} — decorative illustration`,
+    alt: content.title,
     loading: 'lazy',
     decoding: 'async',
   });

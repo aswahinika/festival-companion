@@ -95,7 +95,7 @@
       "order": 1,
       "deity": null,
       "icon": "godakalyanam",
-      "image": null,
+      "image": "assets/images/godakalyanam.jpg",
       "languages": {
         "en": {
           "title": "Sri Goda Kalyanam",
@@ -150,7 +150,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/godakalyanam-en.mp3"
         },
         "te": {
           "title": "శ్రీ గోదా కల్యాణం",
@@ -327,7 +328,7 @@
       "order": 2,
       "deity": null,
       "icon": "makarasankranti",
-      "image": null,
+      "image": "assets/images/makarasankranti.jpg",
       "languages": {
         "en": {
           "title": "Makara Sankranti",
@@ -382,7 +383,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/makarasankranti-en.mp3"
         },
         "te": {
           "title": "మకర సంక్రాంతి",
@@ -559,7 +561,7 @@
       "order": 3,
       "deity": null,
       "icon": "shivaratri",
-      "image": null,
+      "image": "assets/images/shivaratri.jpg",
       "languages": {
         "en": {
           "title": "Maha Shivaratri",
@@ -614,7 +616,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/shivaratri-en.mp3"
         },
         "te": {
           "title": "మహాశివరాత్రి",
@@ -791,7 +794,7 @@
       "order": 4,
       "deity": null,
       "icon": "mahalakshmijayanthi",
-      "image": null,
+      "image": "assets/images/mahalakshmijayanthi.jpg",
       "languages": {
         "en": {
           "title": "Sri Mahalakshmi Jayanthi",
@@ -846,7 +849,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/mahalakshmijayanthi-en.mp3"
         },
         "te": {
           "title": "శ్రీ మహాలక్ష్మి జయంతి",
@@ -1078,7 +1082,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/yugadi-en.mp3"
         },
         "te": {
           "title": "యుగాది (ఉగాది)",
@@ -1255,7 +1260,7 @@
       "order": 6,
       "deity": null,
       "icon": "ramanavami",
-      "image": null,
+      "image": "assets/images/ramanavami.jpg",
       "languages": {
         "en": {
           "title": "Sri Rama Navami",
@@ -1310,7 +1315,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/ramanavami-en.mp3"
         },
         "te": {
           "title": "శ్రీరామ నవమి",
@@ -1487,7 +1493,7 @@
       "order": 7,
       "deity": null,
       "icon": "hanumanjayanthi",
-      "image": null,
+      "image": "assets/images/hanumanjayanthi.jpg",
       "languages": {
         "en": {
           "title": "Hanuman Jayanthi",
@@ -1542,7 +1548,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/hanumanjayanthi-en.mp3"
         },
         "te": {
           "title": "హనుమాన్ జయంతి",
@@ -1774,7 +1781,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/sivalayavarshikotsavam-en.mp3"
         },
         "te": {
           "title": "శివాలయ వార్షికోత్సవం",
@@ -2006,7 +2014,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/tamilnewyearvishu-en.mp3"
         },
         "te": {
           "title": "తమిళ నూతన సంవత్సరం (పుత్తాండు), విషు",
@@ -2238,7 +2247,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/akshayatritiya-en.mp3"
         },
         "te": {
           "title": "అక్షయ తృతీయ",
@@ -2470,7 +2480,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/brahmotsavam-en.mp3"
         },
         "te": {
           "title": "బ్రహ్మోత్సవం",
@@ -2702,7 +2713,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/gurupurnima-en.mp3"
         },
         "te": {
           "title": "గురు పూర్ణిమ",
@@ -2934,7 +2946,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/pavithrotsavam-en.mp3"
         },
         "te": {
           "title": "పవిత్రోత్సవం",
@@ -3111,7 +3124,7 @@
       "order": 14,
       "deity": null,
       "icon": "janmashtami",
-      "image": null,
+      "image": "assets/images/janmashtami.jpg",
       "languages": {
         "en": {
           "title": "Krishna Janmashtami",
@@ -3166,7 +3179,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/janmashtami-en.mp3"
         },
         "te": {
           "title": "శ్రీకృష్ణ జన్మాష్టమి",
@@ -3343,7 +3357,7 @@
       "order": 15,
       "deity": null,
       "icon": "ganeshchaturthi",
-      "image": null,
+      "image": "assets/images/ganeshchaturthi.jpg",
       "languages": {
         "en": {
           "title": "Ganesh Chaturthi (Vinayaka Chavithi)",
@@ -3398,7 +3412,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/ganeshchaturthi-en.mp3"
         },
         "te": {
           "title": "వినాయక చవితి",
@@ -3575,7 +3590,7 @@
       "order": 16,
       "deity": null,
       "icon": "dussehra",
-      "image": null,
+      "image": "assets/images/dussehra.jpg",
       "languages": {
         "en": {
           "title": "Dussehra (Vijayadashami)",
@@ -3630,7 +3645,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/dussehra-en.mp3"
         },
         "te": {
           "title": "దసరా (విజయదశమి)",
@@ -3862,7 +3878,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/srivarujayanti-en.mp3"
         },
         "te": {
           "title": "శ్రీవారు జయంతి",
@@ -4039,7 +4056,7 @@
       "order": 18,
       "deity": null,
       "icon": "diwali",
-      "image": null,
+      "image": "assets/images/diwali.jpg",
       "languages": {
         "en": {
           "title": "Diwali (Deepavali)",
@@ -4094,7 +4111,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/diwali-en.mp3"
         },
         "te": {
           "title": "దీపావళి",
@@ -4271,7 +4289,7 @@
       "order": 19,
       "deity": null,
       "icon": "skandashashti",
-      "image": null,
+      "image": "assets/images/skandashashti.jpg",
       "languages": {
         "en": {
           "title": "Skanda Sashti",
@@ -4326,7 +4344,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/skandashashti-en.mp3"
         },
         "te": {
           "title": "స్కంద షష్ఠి",
@@ -4503,7 +4522,7 @@
       "order": 20,
       "deity": null,
       "icon": "ayyappamandala",
-      "image": null,
+      "image": "assets/images/ayyappamandala.jpg",
       "languages": {
         "en": {
           "title": "Ayyappa Mandala Kalam Begins",
@@ -4558,7 +4577,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/ayyappamandala-en.mp3"
         },
         "te": {
           "title": "అయ్యప్ప మండల కాలం ఆరంభం",
@@ -4735,7 +4755,7 @@
       "order": 21,
       "deity": null,
       "icon": "vaikunthaekadasi",
-      "image": null,
+      "image": "assets/images/vaikunthaekadasi.jpg",
       "languages": {
         "en": {
           "title": "Vaikuntha Ekadasi",
@@ -4790,7 +4810,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/vaikunthaekadasi-en.mp3"
         },
         "te": {
           "title": "వైకుంఠ ఏకాదశి",
