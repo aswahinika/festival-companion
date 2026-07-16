@@ -10,6 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "validate": "node scripts/validate-data.mjs",
+    "gen:art": "node scripts/make-art.mjs",
+    "gen:narration": "node scripts/gen-narration.mjs",
     "format": "prettier --write \"**/*.{js,mjs,css,json,md,html}\"",
     "format:check": "prettier --check \"**/*.{js,mjs,css,json,md,html}\"",
     "lint": "eslint ."

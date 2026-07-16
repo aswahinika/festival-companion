@@ -106,4 +106,6 @@ if (problems.length) {
 await writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8');
 console.log(`Story tails trimmed: ${storyTrims}`);
 console.log(`Why sections deepened: ${whyUpdates}`);
-console.log('Done. English-only; te/ta/hi unchanged. All UNVERIFIED — review needed.');
+console.log(
+  'Done. English-only; te/ta/hi unchanged. All UNVERIFIED — review needed.'
+);

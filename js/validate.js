@@ -87,6 +87,11 @@ export function validateFestivalData(data) {
         }
       }
 
+      // Optional pre-generated narration audio path (string or absent).
+      if (block.narration != null && typeof block.narration !== 'string') {
+        add(`${lw}: "narration" must be a file path string or null.`);
+      }
+
       // Quiz
       if (!Array.isArray(block.quiz) || block.quiz.length === 0) {
         add(`${lw}: "quiz" must be a non-empty array.`);

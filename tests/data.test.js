@@ -82,4 +82,14 @@ describe('validation catches malformed content', () => {
     const { ok } = validateFestivalData(clone);
     expect(ok).toBe(true);
   });
+
+  it('accepts an optional narration path string and rejects non-strings', () => {
+    const ok1 = structuredClone(data);
+    ok1.festivals[0].languages.en.narration = 'assets/audio/narration/x-en.mp3';
+    expect(validateFestivalData(ok1).ok).toBe(true);
+
+    const bad = structuredClone(data);
+    bad.festivals[0].languages.en.narration = 123;
+    expect(validateFestivalData(bad).ok).toBe(false);
+  });
 });

@@ -133,16 +133,31 @@ Each festival shows a **🔊 Read aloud** button that speaks the story, rituals,
 sent anywhere, works offline, and follows the selected language. It offers
 play/pause/resume/stop and never autoplays.
 
-**Voice quality is device-dependent** (this is inherent to free browser TTS):
+There are **two sources**, tried in order per language:
 
-- We request **Indian English (`en-IN`)** and pick the **most natural-sounding**
-  voice installed, preferring cloud/neural voices (e.g. Chrome's Google voices)
-  over robotic local ones. If your device only has a robotic system voice, that's
-  what you'll hear — installing better voices (or using Chrome online) improves it.
-- **Telugu/Tamil/Hindi** only work if that language's voice is installed. When it
-  isn't, the button is **disabled with an explanation** instead of failing
-  silently. Desktop browsers frequently lack Indic voices; Android/ChromeOS and
-  Chrome (online) tend to have them.
+1. **Pre-generated MP3 (recommended for Telugu/Tamil).** Run
+   `npm run gen:narration` once (see below) to create natural neural-voice MP3s.
+   When a language has an MP3, the app **plays it** — so it works on **every
+   device**, offline, with **zero runtime cost** (just static files).
+2. **Browser voice (fallback).** If there's no MP3 for a language, the app uses
+   the device's built-in **Web Speech** voice: it requests **Indian English
+   (`en-IN`)** and prefers the most natural voice installed. If the device has no
+   voice for that language (common for **Telugu/Tamil on desktop**), the button is
+   **disabled with an explanation** rather than failing silently.
+
+**Generate narration MP3s** (one-time, needs a Google Cloud TTS API key — the key
+stays in your shell, never in the app):
+
+```bash
+# PowerShell:  $env:GOOGLE_TTS_API_KEY="AIza..."
+# bash:        export GOOGLE_TTS_API_KEY="AIza..."
+npm run gen:narration               # Telugu + Tamil (the ones browsers lack)
+npm run gen:narration -- --langs te,ta,en,hi   # all four
+```
+
+It writes `assets/audio/narration/<id>-<lang>.mp3` and records the paths in
+`data/festivals.json`; commit both and deploy. Full notes are in the script header
+and `assets/audio/narration/README.md`.
 - The **shloka's original text is deliberately not spoken** (TTS mispronounces
   Sanskrit/Tamil recitation) — use a human recording for that (see "How to add
   audio"). Truly studio-quality, guaranteed-accurate audio needs a paid cloud TTS

@@ -50,6 +50,7 @@ const dom = {};
 let reader = null;
 let readStateHandler = () => {};
 let voicesUnsub = null;
+let activeNarrator = null; // the audio/speech narrator for the current card
 
 // ---------------------------------------------------------------------------
 // Startup
@@ -359,17 +360,74 @@ function section(labelText, bodyText) {
 }
 
 function stopReading() {
-  if (reader) reader.stop();
+  if (activeNarrator) activeNarrator.stop();
 }
 
-// A play/pause + stop control that reads the narrative aloud via the browser.
-// Returns an empty fragment when the browser has no speech support. When no
-// voice is installed for the current language, the button is shown disabled with
-// an explanation (and re-enabled if voices load later) rather than failing quietly.
+// Narrator backed by a pre-generated MP3 file (assets/audio/narration/<id>-<lang>.mp3).
+// Same interface as the Web Speech reader so the control can use either uniformly.
+function createAudioNarrator(src, onState, onError) {
+  const audio = new Audio(src);
+  audio.preload = 'metadata';
+  let playing = false;
+  let paused = false;
+  const emit = () => onState({ playing, paused });
+  audio.addEventListener('ended', () => {
+    playing = false;
+    paused = false;
+    emit();
+  });
+  audio.addEventListener('error', () => {
+    playing = false;
+    paused = false;
+    emit();
+    if (onError) onError();
+  });
+  return {
+    speak() {
+      playing = true;
+      paused = false;
+      emit();
+      audio.play().catch(() => {
+        playing = false;
+        emit();
+        if (onError) onError();
+      });
+      return true;
+    },
+    pause() {
+      if (playing && !paused) {
+        audio.pause();
+        paused = true;
+        emit();
+      }
+    },
+    resume() {
+      if (playing && paused) {
+        audio.play().catch(() => {});
+        paused = false;
+        emit();
+      }
+    },
+    stop() {
+      audio.pause();
+      audio.currentTime = 0;
+      playing = false;
+      paused = false;
+      emit();
+    },
+    isPlaying: () => playing,
+    isPaused: () => paused,
+  };
+}
+
+// A play/pause + stop control that reads the narrative aloud.
+// Prefers a pre-generated MP3 (content.narration) so Telugu/Tamil work on every
+// device; otherwise uses the browser's Web Speech voice, disabling the button
+// with an explanation when no voice is installed for the language.
 function readAloudControl(t, content, lang) {
   const frag = document.createDocumentFragment();
-  if (!speechSupported()) return frag;
-  if (reader === null) reader = createReader((s) => readStateHandler(s));
+  const narrationSrc = content.narration || null;
+  if (!narrationSrc && !speechSupported()) return frag;
 
   const wrap = el('div', { class: 'read-aloud' });
   const playBtn = el('button', {
@@ -401,35 +459,7 @@ function readAloudControl(t, content, lang) {
     content.importance,
   ];
 
-  // Enable/disable based on whether a voice exists for this language.
-  function updateAvailability() {
-    const ok = hasVoice(lang);
-    playBtn.disabled = !ok;
-    if (ok) {
-      playBtn.removeAttribute('title');
-      playBtn.removeAttribute('aria-label');
-    } else {
-      playBtn.title = t.readUnavailable;
-      playBtn.setAttribute(
-        'aria-label',
-        `${t.readAloud} — ${t.readUnavailable}`
-      );
-    }
-  }
-  updateAvailability();
-
-  // Voices may arrive after first paint; refresh availability when they do.
-  if (voicesUnsub) voicesUnsub();
-  voicesUnsub = onVoicesChanged(() => {
-    if (playBtn.isConnected) updateAvailability();
-    else if (voicesUnsub) {
-      voicesUnsub();
-      voicesUnsub = null;
-    }
-  });
-
-  // Re-point the reader's state callback at THIS render's buttons.
-  readStateHandler = ({ playing, paused }) => {
+  const updateState = ({ playing, paused }) => {
     if (!playBtn.isConnected) return;
     playBtn.setAttribute('aria-pressed', String(playing && !paused));
     stopBtn.hidden = !playing;
@@ -445,14 +475,54 @@ function readAloudControl(t, content, lang) {
     }
   };
 
+  let narrator;
+  if (narrationSrc) {
+    // Pre-generated human/neural audio — works regardless of device voices.
+    narrator = createAudioNarrator(narrationSrc, updateState, () => {
+      playBtn.disabled = true;
+      playBtn.title = t.readUnavailable;
+      announce(t.readUnavailable);
+    });
+  } else {
+    // Browser Web Speech fallback.
+    if (reader === null) reader = createReader((s) => readStateHandler(s));
+    readStateHandler = updateState;
+    narrator = reader;
+
+    const updateAvailability = () => {
+      const ok = hasVoice(lang);
+      playBtn.disabled = !ok;
+      if (ok) {
+        playBtn.removeAttribute('title');
+        playBtn.removeAttribute('aria-label');
+      } else {
+        playBtn.title = t.readUnavailable;
+        playBtn.setAttribute(
+          'aria-label',
+          `${t.readAloud} — ${t.readUnavailable}`
+        );
+      }
+    };
+    updateAvailability();
+    if (voicesUnsub) voicesUnsub();
+    voicesUnsub = onVoicesChanged(() => {
+      if (playBtn.isConnected) updateAvailability();
+      else if (voicesUnsub) {
+        voicesUnsub();
+        voicesUnsub = null;
+      }
+    });
+  }
+  activeNarrator = narrator;
+
   playBtn.addEventListener('click', () => {
-    if (!reader.isPlaying()) {
-      const started = reader.speak(segments, lang);
-      if (!started) announce(t.readUnavailable);
-    } else if (reader.isPaused()) reader.resume();
-    else reader.pause();
+    if (!narrator.isPlaying()) {
+      const started = narrator.speak(segments, lang);
+      if (started === false) announce(t.readUnavailable);
+    } else if (narrator.isPaused()) narrator.resume();
+    else narrator.pause();
   });
-  stopBtn.addEventListener('click', () => reader.stop());
+  stopBtn.addEventListener('click', () => narrator.stop());
 
   wrap.append(playBtn, stopBtn);
   frag.append(wrap);
