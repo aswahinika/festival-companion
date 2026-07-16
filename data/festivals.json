@@ -1027,7 +1027,7 @@
       "order": 5,
       "deity": null,
       "icon": "yugadi",
-      "image": null,
+      "image": "assets/images/yugadi.jpg",
       "languages": {
         "en": {
           "title": "Yugadi (Ugadi)",
@@ -1726,7 +1726,7 @@
       "order": 8,
       "deity": null,
       "icon": "sivalayavarshikotsavam",
-      "image": null,
+      "image": "assets/images/sivalayavarshikotsavam.jpg",
       "languages": {
         "en": {
           "title": "Sivalaya Varshikotsavam",
@@ -1959,7 +1959,7 @@
       "order": 9,
       "deity": null,
       "icon": "tamilnewyearvishu",
-      "image": null,
+      "image": "assets/images/tamilnewyearvishu.jpg",
       "languages": {
         "en": {
           "title": "Tamil New Year (Puthandu) & Vishu",
@@ -2192,7 +2192,7 @@
       "order": 10,
       "deity": null,
       "icon": "akshayatritiya",
-      "image": null,
+      "image": "assets/images/akshayatritiya.jpg",
       "languages": {
         "en": {
           "title": "Akshaya Tritiya",
@@ -2425,7 +2425,7 @@
       "order": 11,
       "deity": null,
       "icon": "brahmotsavam",
-      "image": null,
+      "image": "assets/images/brahmotsavam.jpg",
       "languages": {
         "en": {
           "title": "Brahmotsavam",
@@ -2658,7 +2658,7 @@
       "order": 12,
       "deity": null,
       "icon": "gurupurnima",
-      "image": null,
+      "image": "assets/images/gurupurnima.jpg",
       "languages": {
         "en": {
           "title": "Guru Purnima",
@@ -2891,7 +2891,7 @@
       "order": 13,
       "deity": null,
       "icon": "pavithrotsavam",
-      "image": null,
+      "image": "assets/images/pavithrotsavam.jpg",
       "languages": {
         "en": {
           "title": "Pavithrotsavam",
@@ -3823,7 +3823,7 @@
       "order": 17,
       "deity": null,
       "icon": "srivarujayanti",
-      "image": null,
+      "image": "assets/images/srivarujayanti.jpg",
       "languages": {
         "en": {
           "title": "Srivaru Jayanti",
