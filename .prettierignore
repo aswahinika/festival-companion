@@ -1,0 +1,5 @@
+node_modules/
+index.original.backup.html
+data/festivals.json
+js/icons.js
+assets/icons/*.svg

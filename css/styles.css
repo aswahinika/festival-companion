@@ -1,0 +1,541 @@
+/* Festival Companion — styles
+   Preserves the original warm temple palette (cream / maroon / marigold / gold).
+   Changes from the prototype are limited to accessibility, per-script fonts,
+   touch targets, reduced motion, print, and the new optional elements. */
+
+:root {
+  --cream: #fff8ec;
+  --paper: #fffdf8;
+  --maroon: #7a2048;
+  --maroon-deep: #551531;
+  --marigold: #e8871e;
+  --marigold-light: #f7b155;
+  --gold: #c79a2e;
+  /* Darker gold used for small label TEXT so it meets contrast (AA). The
+     lighter --gold is kept for decorative rules and accents. */
+  --gold-text: #916a12;
+  --ink: #3a2a1e;
+  --ink-soft: #6b5b4e;
+  --line: #ead9bc;
+  --good: #2f6b40;
+  --good-bg: rgba(47, 107, 64, 0.12);
+  --bad: #a93b27;
+  --bad-bg: rgba(169, 59, 39, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(232, 135, 30, 0.1), transparent 40%),
+    radial-gradient(
+      circle at 88% 92%,
+      rgba(122, 32, 72, 0.08),
+      transparent 45%
+    ),
+    var(--cream);
+  color: var(--ink);
+  font-family:
+    'Work Sans',
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
+  min-height: 100vh;
+}
+
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 18px 60px;
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  background: var(--maroon);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  z-index: 100;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 8px;
+}
+
+/* Visually-hidden but available to screen readers */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Global visible focus */
+:focus-visible {
+  outline: 2px solid var(--maroon);
+  outline-offset: 2px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+.app-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.temple-logo {
+  max-height: 44px;
+  width: auto;
+}
+.temple-name {
+  font-weight: 600;
+  color: var(--maroon-deep);
+  font-size: 0.95rem;
+}
+.diya {
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 8px;
+  display: block;
+}
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(1.7rem, 5vw, 2.1rem);
+  margin: 0 0 4px;
+  color: var(--maroon-deep);
+  letter-spacing: 0.2px;
+}
+.tagline {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Disclaimer */
+.disclaimer {
+  background: rgba(232, 135, 30, 0.08);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin: 18px 0;
+}
+
+/* Language toggle */
+.lang-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 18px 0 22px;
+  flex-wrap: wrap;
+}
+.lang-btn {
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-soft);
+  padding: 9px 18px;
+  min-height: 44px; /* touch target */
+  border-radius: 999px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.lang-btn.active {
+  background: var(--maroon);
+  border-color: var(--maroon);
+  color: #fff;
+}
+
+/* Festival dropdown */
+.fest-select-row {
+  margin-bottom: 20px;
+}
+.calendar-year-label {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--gold-text);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 8px;
+}
+#festSelect {
+  width: 100%;
+  padding: 13px 16px;
+  min-height: 48px; /* touch target */
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--maroon-deep);
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--marigold) 50%),
+    linear-gradient(135deg, var(--marigold) 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) center,
+    calc(100% - 15px) center;
+  background-size:
+    7px 7px,
+    7px 7px;
+  background-repeat: no-repeat;
+}
+
+/* External links (calendar / activity / back to temple) */
+.links-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.ext-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1.5px solid var(--maroon);
+  border-radius: 999px;
+  color: var(--maroon);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.ext-link:hover {
+  background: rgba(122, 32, 72, 0.06);
+}
+.ext-link::after {
+  content: '\2197';
+  font-size: 0.9em;
+} /* ↗ new tab hint */
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 26px 24px;
+  box-shadow: 0 4px 18px rgba(122, 32, 72, 0.06);
+}
+.card:focus {
+  outline: none;
+} /* focused programmatically after switching; not a visible target */
+
+.icon-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.icon-wrap svg {
+  width: 64px;
+  height: 64px;
+}
+
+.festival-image {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 0 auto 14px;
+  border-radius: 12px;
+}
+
+.festival-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--maroon);
+  margin: 0 0 2px;
+  text-align: center;
+}
+.festival-sub {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  margin: 0 0 18px;
+  font-style: italic;
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 22px;
+}
+.section:last-child {
+  margin-bottom: 0;
+}
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold-text);
+  margin: 0 0 8px;
+}
+.section-label .rule {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.section p {
+  margin: 0;
+  line-height: 1.65;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+/* ---- Per-script fonts (fixes the original mixed-stack bug) ----
+   Each script gets ONLY its own font. Sanskrit shlokas are tagged lang="sa"
+   and use the Devanagari font, never Telugu. */
+:lang(te) {
+  font-family: 'Noto Sans Telugu', 'Work Sans', sans-serif;
+  line-height: 1.9;
+}
+:lang(ta) {
+  font-family: 'Noto Sans Tamil', 'Work Sans', sans-serif;
+  line-height: 1.9;
+}
+:lang(hi) {
+  font-family: 'Noto Sans Devanagari', 'Work Sans', sans-serif;
+  line-height: 1.9;
+}
+:lang(sa) {
+  font-family: 'Noto Sans Devanagari', 'Work Sans', serif;
+}
+
+/* Shloka box */
+.shloka-box {
+  background: linear-gradient(
+    135deg,
+    rgba(122, 32, 72, 0.05),
+    rgba(232, 135, 30, 0.06)
+  );
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+.shloka-sanskrit {
+  font-size: 1.08rem;
+  color: var(--maroon-deep);
+  line-height: 1.9;
+  margin: 0 0 8px;
+  font-weight: 600;
+  white-space: pre-line; /* render newlines from data without innerHTML */
+}
+.shloka-translit {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  margin: 0 0 10px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+.shloka-meaning {
+  font-size: 0.94rem;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.6;
+  border-top: 1px dashed var(--line);
+  padding-top: 10px;
+}
+
+/* Shloka audio */
+.audio-player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.audio-player audio {
+  max-width: 100%;
+}
+.audio-restart {
+  min-width: 44px;
+  min-height: 44px;
+  border: 1.5px solid var(--maroon);
+  background: #fff;
+  color: var(--maroon);
+  border-radius: 999px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* Quiz */
+.quiz-q {
+  margin-bottom: 18px;
+}
+.quiz-q:last-child {
+  margin-bottom: 0;
+}
+.qtext {
+  font-weight: 600;
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+.opts {
+  display: grid;
+  gap: 8px;
+}
+.opt {
+  text-align: left;
+  padding: 12px 14px;
+  min-height: 44px; /* touch target */
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--ink);
+  transition: all 0.12s ease;
+  font-family: inherit;
+}
+.opt:hover {
+  border-color: var(--marigold);
+}
+.opt.correct {
+  background: var(--good-bg);
+  border-color: var(--good);
+  color: var(--good);
+  font-weight: 600;
+}
+.opt.wrong {
+  background: var(--bad-bg);
+  border-color: var(--bad);
+  color: var(--bad);
+}
+.opt[disabled] {
+  cursor: default;
+}
+.opt-mark {
+  font-weight: 700;
+} /* ✓ / ✗ non-color cue */
+
+.quiz-explain {
+  margin: 6px 0 0;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.quiz-score {
+  text-align: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+  font-weight: 600;
+  color: var(--maroon);
+  display: none;
+}
+.quiz-score.show {
+  display: block;
+}
+.reset-btn {
+  display: block;
+  margin: 10px auto 0;
+  background: none;
+  border: 1.5px solid var(--maroon);
+  color: var(--maroon);
+  padding: 10px 20px;
+  min-height: 44px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.load-error {
+  background: var(--bad-bg);
+  border: 1px solid var(--bad);
+  color: var(--bad);
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  margin-top: 22px;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+footer .links-row {
+  margin: 10px 0;
+}
+.review-attribution {
+  font-size: 0.72rem;
+  opacity: 0.85;
+}
+
+@media (max-width: 480px) {
+  .wrap {
+    padding: 20px 14px 48px;
+  }
+  .card {
+    padding: 20px 16px;
+  }
+}
+
+/* Respect reduced-motion: disable decorative transitions/animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print: clean, ink-friendly coloring/reading page */
+@media print {
+  body {
+    background: #fff;
+  }
+  .lang-row,
+  .fest-select-row,
+  .links-row,
+  .skip-link,
+  .quiz .opt,
+  .reset-btn,
+  .audio-player {
+    display: none !important;
+  }
+  .card {
+    box-shadow: none;
+    border: none;
+  }
+}
