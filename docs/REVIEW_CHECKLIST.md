@@ -20,6 +20,19 @@ speaker's confirmation.
    — do **not** rewrite culturally sensitive content without the reviewer's
    agreement.
 
+## ⚠️ Priority: English story + "why" were revised (2026-07-16) — UNVERIFIED
+
+On 2026-07-16 the **English** `story` and `importance` ("Why We Do This") text for
+**all 21 festivals** was rewritten to (a) explain *why* each festival is celebrated
+rather than just summarize, and (b) remove duplication (the story's trailing
+"that's why…" sentence was trimmed for 7 festivals so it no longer repeats the
+"Why"). **None of this new wording has been verified yet** — please re-check every
+festival's English "story" and "importance" below, watching for accuracy and
+regional-variation claims (e.g. Diwali's reason, Shivaratri's night, Ganesha's
+immersion). The **Telugu / Tamil / Hindi** versions were **not** changed, so they
+currently differ from English on purpose; they will be re-translated only **after**
+the English is approved.
+
 ## Things known to need confirmation
 
 - **Deity field**: left blank (`null`) for every festival — not guessed. Fill in
