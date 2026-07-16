@@ -205,7 +205,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/godakalyanam-te.mp3"
         },
         "ta": {
           "title": "ஸ்ரீ கோதா கல்யாணம்",
@@ -260,7 +261,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/godakalyanam-ta.mp3"
         },
         "hi": {
           "title": "श्री गोदा कल्याणम्",
@@ -435,7 +437,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/makarasankranti-te.mp3"
         },
         "ta": {
           "title": "மகர சங்கராந்தி",
@@ -490,7 +493,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/makarasankranti-ta.mp3"
         },
         "hi": {
           "title": "मकर संक्रांति",
@@ -665,7 +669,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/shivaratri-te.mp3"
         },
         "ta": {
           "title": "மகா சிவராத்திரி",
@@ -720,7 +725,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/shivaratri-ta.mp3"
         },
         "hi": {
           "title": "महाशिवरात्रि",
@@ -895,7 +901,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/mahalakshmijayanthi-te.mp3"
         },
         "ta": {
           "title": "ஸ்ரீ மகாலட்சுமி ஜயந்தி",
@@ -950,7 +957,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/mahalakshmijayanthi-ta.mp3"
         },
         "hi": {
           "title": "श्री महालक्ष्मी जयंती",
@@ -1125,7 +1133,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/yugadi-te.mp3"
         },
         "ta": {
           "title": "உகாதி (யுகாதி)",
@@ -1180,7 +1189,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/yugadi-ta.mp3"
         },
         "hi": {
           "title": "युगादि (उगादि)",
@@ -1355,7 +1365,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/ramanavami-te.mp3"
         },
         "ta": {
           "title": "ஸ்ரீ ராம நவமி",
@@ -1410,7 +1421,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/ramanavami-ta.mp3"
         },
         "hi": {
           "title": "श्री रामनवमी",
@@ -1585,7 +1597,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/hanumanjayanthi-te.mp3"
         },
         "ta": {
           "title": "அனுமன் ஜயந்தி",
@@ -1640,7 +1653,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/hanumanjayanthi-ta.mp3"
         },
         "hi": {
           "title": "हनुमान जयंती",
@@ -1815,7 +1829,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/sivalayavarshikotsavam-te.mp3"
         },
         "ta": {
           "title": "சிவாலய வார்ஷிகோத்சவம்",
@@ -1870,7 +1885,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/sivalayavarshikotsavam-ta.mp3"
         },
         "hi": {
           "title": "शिवालय वार्षिकोत्सवम्",
@@ -2045,7 +2061,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/tamilnewyearvishu-te.mp3"
         },
         "ta": {
           "title": "தமிழ் புத்தாண்டு (புத்தாண்டு), விஷு",
@@ -2100,7 +2117,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/tamilnewyearvishu-ta.mp3"
         },
         "hi": {
           "title": "तमिल नववर्ष (पुत्तांडु) और विषु",
@@ -2275,7 +2293,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/akshayatritiya-te.mp3"
         },
         "ta": {
           "title": "அக்ஷய திருதியை",
@@ -2330,7 +2349,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/akshayatritiya-ta.mp3"
         },
         "hi": {
           "title": "अक्षय तृतीया",
@@ -2505,7 +2525,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/brahmotsavam-te.mp3"
         },
         "ta": {
           "title": "பிரம்மோத்சவம்",
@@ -2560,7 +2581,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/brahmotsavam-ta.mp3"
         },
         "hi": {
           "title": "ब्रह्मोत्सवम्",
@@ -2735,7 +2757,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/gurupurnima-te.mp3"
         },
         "ta": {
           "title": "குரு பூர்ணிமா",
@@ -2790,7 +2813,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/gurupurnima-ta.mp3"
         },
         "hi": {
           "title": "गुरु पूर्णिमा",
@@ -2965,7 +2989,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/pavithrotsavam-te.mp3"
         },
         "ta": {
           "title": "பவித்ரோத்சவம்",
@@ -3020,7 +3045,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/pavithrotsavam-ta.mp3"
         },
         "hi": {
           "title": "पवित्रोत्सवम्",
@@ -3195,7 +3221,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/janmashtami-te.mp3"
         },
         "ta": {
           "title": "கிருஷ்ண ஜென்மாஷ்டமி",
@@ -3250,7 +3277,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/janmashtami-ta.mp3"
         },
         "hi": {
           "title": "श्री कृष्ण जन्माष्टमी",
@@ -3425,7 +3453,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/ganeshchaturthi-te.mp3"
         },
         "ta": {
           "title": "விநாயக சதுர்த்தி",
@@ -3480,7 +3509,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/ganeshchaturthi-ta.mp3"
         },
         "hi": {
           "title": "गणेश चतुर्थी (विनायक चविथि)",
@@ -3655,7 +3685,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/dussehra-te.mp3"
         },
         "ta": {
           "title": "தசரா (விஜயதசமி)",
@@ -3710,7 +3741,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/dussehra-ta.mp3"
         },
         "hi": {
           "title": "दशहरा (विजयादशमी)",
@@ -3885,7 +3917,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/srivarujayanti-te.mp3"
         },
         "ta": {
           "title": "ஸ்ரீவாரு ஜயந்தி",
@@ -3940,7 +3973,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/srivarujayanti-ta.mp3"
         },
         "hi": {
           "title": "श्रीवारु जयंती",
@@ -4115,7 +4149,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/diwali-te.mp3"
         },
         "ta": {
           "title": "தீபாவளி",
@@ -4170,7 +4205,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/diwali-ta.mp3"
         },
         "hi": {
           "title": "दीवाली (दीपावली)",
@@ -4345,7 +4381,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/skandashashti-te.mp3"
         },
         "ta": {
           "title": "ஸ்கந்த சஷ்டி",
@@ -4400,7 +4437,8 @@
               "answer": 1,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/skandashashti-ta.mp3"
         },
         "hi": {
           "title": "स्कंद षष्ठी",
@@ -4575,7 +4613,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/ayyappamandala-te.mp3"
         },
         "ta": {
           "title": "அய்யப்பன் மண்டல காலம் தொடக்கம்",
@@ -4630,7 +4669,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/ayyappamandala-ta.mp3"
         },
         "hi": {
           "title": "अय्यप्पा मंडल कालम् प्रारंभ",
@@ -4805,7 +4845,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/vaikunthaekadasi-te.mp3"
         },
         "ta": {
           "title": "வைகுண்ட ஏகாதசி",
@@ -4860,7 +4901,8 @@
               "answer": 0,
               "explanation": null
             }
-          ]
+          ],
+          "narration": "assets/audio/narration/vaikunthaekadasi-ta.mp3"
         },
         "hi": {
           "title": "वैकुंठ एकादशी",
