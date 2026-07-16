@@ -52,14 +52,49 @@ const LANGS = (langsFromEquals || langsFromSpace || 'te,ta')
   .map((s) => s.trim())
   .filter(Boolean);
 
-// Voice per language. Swap these for other/newer voices from the Google console
-// (e.g. Chirp3-HD voices) if you prefer — just keep the languageCode correct.
-const VOICES = {
-  en: { languageCode: 'en-IN', name: 'en-IN-Neural2-A' },
-  hi: { languageCode: 'hi-IN', name: 'hi-IN-Neural2-A' },
-  te: { languageCode: 'te-IN', name: 'te-IN-Standard-A' },
-  ta: { languageCode: 'ta-IN', name: 'ta-IN-Wavenet-A' },
+const LC = { en: 'en-IN', hi: 'hi-IN', te: 'te-IN', ta: 'ta-IN' };
+
+// Candidate voices per language, MOST human-sounding first. The script probes
+// them once (a tiny, ~free call) and uses the first one enabled for your project
+// — so a single run gives you the best available voice (Chirp3-HD, Google's most
+// natural "human" tier — Indian accent via the en-IN locale) with automatic
+// fallback to Neural2/Wavenet if Chirp3 isn't available. No trial and error.
+const VOICE_CANDIDATES = {
+  en: [
+    'en-IN-Chirp3-HD-Kore',
+    'en-IN-Chirp3-HD-Aoede',
+    'en-IN-Neural2-A',
+    'en-IN-Wavenet-A',
+    'en-IN-Standard-A',
+  ],
+  hi: [
+    'hi-IN-Chirp3-HD-Kore',
+    'hi-IN-Neural2-A',
+    'hi-IN-Wavenet-A',
+    'hi-IN-Standard-A',
+  ],
+  te: ['te-IN-Chirp3-HD-Kore', 'te-IN-Standard-A', 'te-IN-Standard-B'],
+  ta: ['ta-IN-Chirp3-HD-Kore', 'ta-IN-Wavenet-A', 'ta-IN-Standard-A'],
 };
+const resolvedVoice = {};
+
+async function resolveVoice(lang) {
+  if (lang in resolvedVoice) return resolvedVoice[lang];
+  const languageCode = LC[lang];
+  for (const name of VOICE_CANDIDATES[lang] || []) {
+    try {
+      await synth('Namaste', { languageCode, name }); // tiny probe (~free)
+      resolvedVoice[lang] = { languageCode, name };
+      console.log(`Voice for ${lang}: ${name}`);
+      return resolvedVoice[lang];
+    } catch {
+      // not enabled for this project/region — try the next candidate
+    }
+  }
+  console.error(`No usable voice for "${lang}".`);
+  resolvedVoice[lang] = null;
+  return null;
+}
 
 const MAX_BYTES = 4000; // stay well under the 5000-byte request limit (UTF-8)
 const bytes = (s) => Buffer.byteLength(s, 'utf8');
@@ -97,7 +132,11 @@ async function synth(text, voice) {
       body: JSON.stringify({
         input: { text },
         voice: { languageCode: voice.languageCode, name: voice.name },
-        audioConfig: { audioEncoding: 'MP3', speakingRate: 0.92 },
+        // Chirp3-HD ignores/limits speakingRate — omit it there so the probe and
+        // synthesis succeed and we keep the natural pace.
+        audioConfig: /Chirp3/i.test(voice.name)
+          ? { audioEncoding: 'MP3' }
+          : { audioEncoding: 'MP3', speakingRate: 0.92 },
       }),
     }
   );
@@ -117,10 +156,16 @@ for (const f of data.festivals) {
   for (const lang of LANGS) {
     const c = f.languages[lang];
     if (!c) continue;
-    const voice = VOICES[lang];
-    if (!voice) {
-      console.warn(`No voice configured for "${lang}" — skipping.`);
-      continue;
+
+    let voice;
+    if (DRY) {
+      voice = {
+        languageCode: LC[lang],
+        name: (VOICE_CANDIDATES[lang] || ['?'])[0],
+      };
+    } else {
+      voice = await resolveVoice(lang);
+      if (!voice) continue;
     }
     const narrative = [c.title, c.story, c.rituals, c.importance]
       .filter(Boolean)
