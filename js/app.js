@@ -25,6 +25,7 @@ import {
 import { validateFestivalData } from './validate.js';
 import { newQuizState, renderQuiz } from './quiz.js';
 import { ICONS } from './icons.js';
+import { speechSupported, createReader } from './speech.js';
 
 const FEST_PREF_KEY = 'festivalCompanion.festival';
 
@@ -38,6 +39,11 @@ const state = {
 };
 
 const dom = {};
+
+// Read-aloud (Web Speech) — created lazily on first use; the state handler is
+// re-pointed to the current card's button each render.
+let reader = null;
+let readStateHandler = () => {};
 
 // ---------------------------------------------------------------------------
 // Startup
@@ -302,27 +308,35 @@ function render() {
   dom.card.setAttribute('lang', lang);
   document.documentElement.setAttribute('lang', lang);
 
+  stopReading(); // cancel any read-aloud from the previous festival/language
   clear(dom.card);
 
-  // Icon (trusted internal SVG constant)
+  // Icon (trusted internal SVG constant) — used as a fallback if art is missing.
   const svg = svgFromString(ICONS[festival.icon]);
-  if (svg) dom.card.append(el('div', { class: 'icon-wrap' }, [svg]));
+  const iconWrap = svg ? el('div', { class: 'icon-wrap' }, [svg]) : null;
+  if (iconWrap) dom.card.append(iconWrap);
 
-  // Optional festival image (lazy-loaded, only when present)
-  if (festival.image) {
-    dom.card.append(
-      el('img', {
-        class: 'festival-image',
-        src: festival.image,
-        alt: `${content.title} illustration`,
-        loading: 'lazy',
-        decoding: 'async',
-      })
-    );
-  }
+  // Decorative festival banner: an explicit image if provided, otherwise the
+  // generated art at assets/images/<id>.svg. Lazy-loaded; if it loads it hides
+  // the small icon, and if it fails it removes itself (graceful).
+  const artSrc = festival.image || `assets/images/${festival.id}.svg`;
+  const banner = el('img', {
+    class: 'festival-image',
+    src: artSrc,
+    alt: `${content.title} — decorative illustration`,
+    loading: 'lazy',
+    decoding: 'async',
+  });
+  banner.addEventListener('load', () => {
+    if (iconWrap) iconWrap.hidden = true;
+  });
+  banner.addEventListener('error', () => banner.remove());
+  dom.card.append(banner);
 
   dom.card.append(el('h2', { class: 'festival-title', text: content.title }));
   dom.card.append(el('p', { class: 'festival-sub', text: content.subtitle }));
+
+  dom.card.append(readAloudControl(t, content, lang));
 
   dom.card.append(section(t.story, content.story));
   dom.card.append(section(t.rituals, content.rituals));
@@ -336,6 +350,76 @@ function section(labelText, bodyText) {
   wrap.append(sectionLabel(labelText));
   wrap.append(el('p', { text: bodyText }));
   return wrap;
+}
+
+function stopReading() {
+  if (reader) reader.stop();
+}
+
+// A play/pause + stop control that reads the narrative aloud via the browser.
+// Returns an empty fragment when the browser has no speech support.
+function readAloudControl(t, content, lang) {
+  const frag = document.createDocumentFragment();
+  if (!speechSupported()) return frag;
+  if (reader === null) reader = createReader((s) => readStateHandler(s));
+
+  const wrap = el('div', { class: 'read-aloud' });
+  const playBtn = el('button', {
+    type: 'button',
+    class: 'read-btn',
+    'aria-pressed': 'false',
+  });
+  const icon = el('span', {
+    class: 'read-icon',
+    'aria-hidden': 'true',
+    text: '🔊',
+  });
+  const label = el('span', { text: t.readAloud });
+  playBtn.append(icon, label);
+
+  const stopBtn = el('button', {
+    type: 'button',
+    class: 'read-btn read-stop',
+    text: '⏹',
+    'aria-label': t.readStop,
+    title: t.readStop,
+    hidden: true,
+  });
+
+  const segments = [
+    content.title,
+    content.story,
+    content.rituals,
+    content.importance,
+  ];
+
+  // Re-point the reader's state callback at THIS render's buttons.
+  readStateHandler = ({ playing, paused }) => {
+    if (!playBtn.isConnected) return;
+    playBtn.setAttribute('aria-pressed', String(playing && !paused));
+    stopBtn.hidden = !playing;
+    if (!playing) {
+      icon.textContent = '🔊';
+      label.textContent = t.readAloud;
+    } else if (paused) {
+      icon.textContent = '▶';
+      label.textContent = t.readResume;
+    } else {
+      icon.textContent = '⏸';
+      label.textContent = t.pauseAudio;
+    }
+  };
+
+  playBtn.addEventListener('click', () => {
+    if (!reader.isPlaying()) reader.speak(segments, lang);
+    else if (reader.isPaused()) reader.resume();
+    else reader.pause();
+  });
+  stopBtn.addEventListener('click', () => reader.stop());
+
+  wrap.append(playBtn, stopBtn);
+  frag.append(wrap);
+  return frag;
 }
 
 function sectionLabel(text) {

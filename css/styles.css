@@ -27,6 +27,12 @@
   box-sizing: border-box;
 }
 
+/* Ensure the `hidden` attribute always wins, even on elements that set an
+   explicit display (e.g. .icon-wrap/.links-row use flex). */
+[hidden] {
+  display: none !important;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
 }
@@ -263,10 +269,13 @@ h1 {
 .festival-image {
   display: block;
   width: 100%;
-  max-width: 420px;
   height: auto;
+  aspect-ratio: 800 / 380; /* reserve space to avoid layout shift while loading */
   margin: 0 auto 14px;
-  border-radius: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  box-shadow: 0 3px 12px rgba(122, 32, 72, 0.08);
+  background: var(--cream);
 }
 
 .festival-title {
@@ -506,6 +515,101 @@ footer .links-row {
   .card {
     padding: 20px 16px;
   }
+}
+
+/* Read-aloud control */
+.read-aloud {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 0 0 18px;
+}
+.read-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1.5px solid var(--marigold);
+  background: #fff;
+  color: var(--maroon);
+  border-radius: 999px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.read-btn:hover {
+  background: rgba(232, 135, 30, 0.1);
+  transform: translateY(-1px);
+}
+.read-btn[aria-pressed='true'] {
+  background: var(--marigold);
+  border-color: var(--marigold);
+  color: #fff;
+}
+.read-stop {
+  min-width: 44px;
+  justify-content: center;
+}
+
+/* ---- Liveliness: gentle entrance + hover feedback (calm, not flashy) ---- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.card > * {
+  animation: fadeInUp 0.45s ease both;
+}
+.card > *:nth-child(1) {
+  animation-delay: 0.03s;
+}
+.card > *:nth-child(2) {
+  animation-delay: 0.08s;
+}
+.card > *:nth-child(3) {
+  animation-delay: 0.13s;
+}
+.card > *:nth-child(4) {
+  animation-delay: 0.18s;
+}
+.card > *:nth-child(5) {
+  animation-delay: 0.23s;
+}
+.card > *:nth-child(6) {
+  animation-delay: 0.28s;
+}
+.card > *:nth-child(7) {
+  animation-delay: 0.33s;
+}
+.card > *:nth-child(8) {
+  animation-delay: 0.38s;
+}
+.card > *:nth-child(n + 9) {
+  animation-delay: 0.42s;
+}
+.opt:hover {
+  transform: translateY(-1px);
+}
+.lang-btn:hover:not(.active),
+.ext-link:hover {
+  transform: translateY(-1px);
+}
+.ext-link {
+  transition: all 0.15s ease;
+}
+.festival-image {
+  transition: box-shadow 0.2s ease;
+}
+.festival-image:hover {
+  box-shadow: 0 6px 20px rgba(122, 32, 72, 0.16);
 }
 
 /* Respect reduced-motion: disable decorative transitions/animations */

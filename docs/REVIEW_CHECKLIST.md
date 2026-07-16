@@ -490,6 +490,20 @@ confirm the Telugu, Tamil, and Hindi wording reads naturally:
 - `viewCalendar` — "View the Temple Calendar"
 - `backToTemple` — "Back to Temple Website"
 - `activitySheet` — "Printable activity page"
+- `readAloud` — "Read aloud" (button that speaks the story via browser voice)
+- `readResume` — "Resume"
+- `readStop` — "Stop"
+
+## Festival art (symbolic, review optional)
+
+Each festival has a generated decorative SVG banner (`assets/images/<id>.svg`) using
+symbolic motifs (lamp, lotus, conch, vel, arch, toran) — **not** depictions of
+deities' faces/forms. If the temple prefers different artwork, replace the file or
+set the festival's `"image"` field. Confirm the motif choice per festival is
+acceptable:
+
+- [ ] Festival art motifs reviewed / approved
+- Reviewer: __________  Date: __________
 
 - [ ] Telugu interface labels confirmed
 - [ ] Tamil interface labels confirmed

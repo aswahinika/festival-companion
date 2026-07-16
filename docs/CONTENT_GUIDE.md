@@ -24,6 +24,7 @@ If you have never run these, see the README section **"How to run locally."**
 | Temple name, logo, website, calendar link, disclaimer | `js/config.js` |
 | Interface words (buttons, labels) | `js/i18n.js` |
 | A festival image | `assets/images/` + the `"image"` field |
+| Regenerate the decorative art | run `node scripts/make-art.mjs` |
 | A shloka recording | `assets/audio/` + the `"audio"` field |
 
 ## The shape of one festival

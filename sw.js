@@ -9,7 +9,7 @@
 // TO PUBLISH UPDATED CONTENT/CODE: bump CACHE_VERSION below by one. Old caches
 // are deleted on activation. (Documented in docs/ARCHITECTURE.md.)
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `festival-companion-${CACHE_VERSION}`;
 
 const SHELL_ASSETS = [
@@ -24,6 +24,7 @@ const SHELL_ASSETS = [
   'js/validate.js',
   'js/icons.js',
   'js/config.js',
+  'js/speech.js',
   'data/festivals.json',
   'assets/icons/icon.svg',
   'assets/icons/icon-192.png',
