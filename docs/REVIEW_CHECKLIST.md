@@ -493,6 +493,7 @@ confirm the Telugu, Tamil, and Hindi wording reads naturally:
 - `readAloud` — "Read aloud" (button that speaks the story via browser voice)
 - `readResume` — "Resume"
 - `readStop` — "Stop"
+- `readUnavailable` — "A voice for this language isn't available on this device"
 
 ## Festival art (symbolic, review optional)
 

@@ -25,7 +25,12 @@ import {
 import { validateFestivalData } from './validate.js';
 import { newQuizState, renderQuiz } from './quiz.js';
 import { ICONS } from './icons.js';
-import { speechSupported, createReader } from './speech.js';
+import {
+  speechSupported,
+  createReader,
+  hasVoice,
+  onVoicesChanged,
+} from './speech.js';
 
 const FEST_PREF_KEY = 'festivalCompanion.festival';
 
@@ -44,6 +49,7 @@ const dom = {};
 // re-pointed to the current card's button each render.
 let reader = null;
 let readStateHandler = () => {};
+let voicesUnsub = null;
 
 // ---------------------------------------------------------------------------
 // Startup
@@ -357,7 +363,9 @@ function stopReading() {
 }
 
 // A play/pause + stop control that reads the narrative aloud via the browser.
-// Returns an empty fragment when the browser has no speech support.
+// Returns an empty fragment when the browser has no speech support. When no
+// voice is installed for the current language, the button is shown disabled with
+// an explanation (and re-enabled if voices load later) rather than failing quietly.
 function readAloudControl(t, content, lang) {
   const frag = document.createDocumentFragment();
   if (!speechSupported()) return frag;
@@ -393,6 +401,33 @@ function readAloudControl(t, content, lang) {
     content.importance,
   ];
 
+  // Enable/disable based on whether a voice exists for this language.
+  function updateAvailability() {
+    const ok = hasVoice(lang);
+    playBtn.disabled = !ok;
+    if (ok) {
+      playBtn.removeAttribute('title');
+      playBtn.removeAttribute('aria-label');
+    } else {
+      playBtn.title = t.readUnavailable;
+      playBtn.setAttribute(
+        'aria-label',
+        `${t.readAloud} — ${t.readUnavailable}`
+      );
+    }
+  }
+  updateAvailability();
+
+  // Voices may arrive after first paint; refresh availability when they do.
+  if (voicesUnsub) voicesUnsub();
+  voicesUnsub = onVoicesChanged(() => {
+    if (playBtn.isConnected) updateAvailability();
+    else if (voicesUnsub) {
+      voicesUnsub();
+      voicesUnsub = null;
+    }
+  });
+
   // Re-point the reader's state callback at THIS render's buttons.
   readStateHandler = ({ playing, paused }) => {
     if (!playBtn.isConnected) return;
@@ -411,8 +446,10 @@ function readAloudControl(t, content, lang) {
   };
 
   playBtn.addEventListener('click', () => {
-    if (!reader.isPlaying()) reader.speak(segments, lang);
-    else if (reader.isPaused()) reader.resume();
+    if (!reader.isPlaying()) {
+      const started = reader.speak(segments, lang);
+      if (!started) announce(t.readUnavailable);
+    } else if (reader.isPaused()) reader.resume();
     else reader.pause();
   });
   stopBtn.addEventListener('click', () => reader.stop());
@@ -495,7 +532,7 @@ function quizSection(t, festival, content, lang) {
 
   const key = `${festival.id}:${lang}`;
   if (!state.quizStates[key]) {
-    state.quizStates[key] = newQuizState(content.quiz.length);
+    state.quizStates[key] = newQuizState(content.quiz);
   }
 
   const container = el('div', { class: 'quiz' });

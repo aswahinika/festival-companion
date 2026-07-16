@@ -5,6 +5,7 @@ import {
   isComplete,
   scoreOf,
   renderQuiz,
+  shuffledIndices,
 } from '../js/quiz.js';
 import { UI_STRINGS } from '../js/i18n.js';
 
@@ -20,23 +21,40 @@ const sampleQuiz = [
   { question: 'Q2', options: ['x', 'y'], answer: 0, explanation: null },
 ];
 
+describe('shuffling', () => {
+  it('returns a permutation of 0..n-1', () => {
+    const p = shuffledIndices(5);
+    expect(p.slice().sort((a, b) => a - b)).toEqual([0, 1, 2, 3, 4]);
+  });
+
+  it('newQuizState produces per-question option orders that are permutations', () => {
+    const s = newQuizState(sampleQuiz);
+    expect(s.questionOrder.slice().sort()).toEqual([0, 1]);
+    s.optionOrders.forEach((order, i) => {
+      expect(order.slice().sort((a, b) => a - b)).toEqual(
+        sampleQuiz[i].options.map((_, k) => k)
+      );
+    });
+  });
+});
+
 describe('quiz scoring (pure logic)', () => {
   it('starts empty', () => {
-    const s = newQuizState(2);
+    const s = newQuizState(sampleQuiz);
     expect(s.answered).toEqual([false, false]);
     expect(scoreOf(s)).toBe(0);
     expect(isComplete(s)).toBe(false);
   });
 
   it('scores a correct answer once', () => {
-    const s = newQuizState(2);
+    const s = newQuizState(sampleQuiz);
     const r = recordAnswer(s, 0, 1, 1);
     expect(r).toEqual({ changed: true, wasCorrect: true });
     expect(scoreOf(s)).toBe(1);
   });
 
   it('does not double-score the same question', () => {
-    const s = newQuizState(2);
+    const s = newQuizState(sampleQuiz);
     recordAnswer(s, 0, 1, 1); // correct
     const again = recordAnswer(s, 0, 0, 1); // try to answer again
     expect(again.changed).toBe(false);
@@ -44,14 +62,14 @@ describe('quiz scoring (pure logic)', () => {
   });
 
   it('does not score a wrong answer', () => {
-    const s = newQuizState(2);
+    const s = newQuizState(sampleQuiz);
     recordAnswer(s, 0, 0, 1);
     expect(scoreOf(s)).toBe(0);
     expect(s.selected[0]).toBe(0);
   });
 
   it('reports completion when all answered', () => {
-    const s = newQuizState(2);
+    const s = newQuizState(sampleQuiz);
     recordAnswer(s, 0, 1, 1);
     recordAnswer(s, 1, 0, 0);
     expect(isComplete(s)).toBe(true);
@@ -60,9 +78,13 @@ describe('quiz scoring (pure logic)', () => {
 });
 
 describe('quiz rendering (jsdom)', () => {
+  // Identity RNG keeps display order == original order so positional assertions
+  // are deterministic. (Real usage shuffles with Math.random.)
+  const identityRng = () => 0.999999;
+
   function setup() {
     const container = document.createElement('div');
-    const state = newQuizState(sampleQuiz.length);
+    const state = newQuizState(sampleQuiz, identityRng);
     const announce = vi.fn();
     renderQuiz({ container, quiz: sampleQuiz, strings, state, announce });
     return { container, state, announce };

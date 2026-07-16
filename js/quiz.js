@@ -1,9 +1,13 @@
 // Quiz behavior, kept separate from general app orchestration.
 //
 // Split into:
-//   * pure state helpers (newQuizState / recordAnswer / isComplete / scoreOf) —
-//     no DOM, unit-tested directly.
+//   * pure state helpers (newQuizState / recordAnswer / isComplete / scoreOf /
+//     shuffledIndices) — no DOM, unit-tested directly.
 //   * renderQuiz() — builds accessible DOM and wires interaction.
+//
+// Options AND question order are shuffled on every attempt so the correct answer
+// isn't always in the same position (the source data leans heavily on option 1),
+// and "Try Again" re-shuffles for a fresh run. Question CONTENT is unchanged.
 
 import { el, clear } from './utils.js';
 
@@ -11,11 +15,29 @@ import { el, clear } from './utils.js';
 // Pure state
 // ---------------------------------------------------------------------------
 
-export function newQuizState(length) {
+/** Fisher–Yates shuffle of [0..n-1]. rng is injectable for deterministic tests. */
+export function shuffledIndices(n, rng = Math.random) {
+  const a = Array.from({ length: n }, (_, i) => i);
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/**
+ * Create fresh quiz state for a quiz (array of {question, options, answer}).
+ * `answered`/`selected` are indexed by ORIGINAL question index; `questionOrder`
+ * and `optionOrders` hold the shuffled display order.
+ */
+export function newQuizState(quiz, rng = Math.random) {
+  const length = quiz.length;
   return {
     answered: new Array(length).fill(false),
     selected: new Array(length).fill(-1),
     correctCount: 0,
+    questionOrder: shuffledIndices(length, rng),
+    optionOrders: quiz.map((q) => shuffledIndices(q.options.length, rng)),
   };
 }
 
@@ -50,51 +72,50 @@ export function scoreOf(state) {
  *
  * @param {Object} opts
  * @param {HTMLElement} opts.container
- * @param {Array}  opts.quiz       - array of {question, options, answer, explanation}
- * @param {Object} opts.strings    - UI strings for the active language
- * @param {Object} opts.state      - quiz state (mutated in place)
+ * @param {Array}  opts.quiz    - array of {question, options, answer, explanation}
+ * @param {Object} opts.strings - UI strings for the active language
+ * @param {Object} opts.state   - quiz state (mutated in place)
  * @param {(msg:string)=>void} opts.announce - screen-reader announcer
  */
 export function renderQuiz({ container, quiz, strings, state, announce }) {
   clear(container);
 
-  quiz.forEach((item, i) => {
+  state.questionOrder.forEach((qi, displayPos) => {
+    const item = quiz[qi];
     const block = el('div', { class: 'quiz-q' });
 
     block.append(
       el('p', {
         class: 'qtext',
-        text: `${i + 1}. ${item.question}`,
-        id: `q-${i}-label`,
+        text: `${displayPos + 1}. ${item.question}`,
+        id: `q-${qi}-label`,
       })
     );
 
-    // Radio-style group semantics for assistive tech.
     const opts = el('div', {
       class: 'opts',
       role: 'group',
-      'aria-labelledby': `q-${i}-label`,
+      'aria-labelledby': `q-${qi}-label`,
     });
 
-    item.options.forEach((optText, j) => {
+    state.optionOrders[qi].forEach((oj) => {
       const button = el('button', {
         type: 'button',
         class: 'opt',
-        text: optText,
+        text: item.options[oj],
       });
 
-      if (state.answered[i]) {
+      if (state.answered[qi]) {
         button.disabled = true;
-        if (j === item.answer) {
+        if (oj === item.answer) {
           button.classList.add('correct');
-          // Non-color cue: symbol + visually-hidden label.
           button.prepend(
             el('span', { class: 'opt-mark', 'aria-hidden': 'true', text: '✓ ' })
           );
           button.append(
             el('span', { class: 'sr-only', text: ` — ${strings.correctTag}` })
           );
-        } else if (state.selected[i] === j) {
+        } else if (state.selected[qi] === oj) {
           button.classList.add('wrong');
           button.prepend(
             el('span', { class: 'opt-mark', 'aria-hidden': 'true', text: '✗ ' })
@@ -110,8 +131,8 @@ export function renderQuiz({ container, quiz, strings, state, announce }) {
         button.addEventListener('click', () => {
           const { changed, wasCorrect } = recordAnswer(
             state,
-            i,
-            j,
+            qi,
+            oj,
             item.answer
           );
           if (!changed) return;
@@ -128,8 +149,7 @@ export function renderQuiz({ container, quiz, strings, state, announce }) {
 
     block.append(opts);
 
-    // Explanation / correct-answer reveal after answering (when provided).
-    if (state.answered[i] && item.explanation) {
+    if (state.answered[qi] && item.explanation) {
       block.append(el('p', { class: 'quiz-explain', text: item.explanation }));
     }
 
@@ -150,10 +170,9 @@ export function renderQuiz({ container, quiz, strings, state, announce }) {
       text: strings.tryAgain,
     });
     retry.addEventListener('click', () => {
-      const fresh = newQuizState(quiz.length);
-      Object.assign(state, fresh);
+      // Re-shuffle for a fresh attempt.
+      Object.assign(state, newQuizState(quiz));
       renderQuiz({ container, quiz, strings, state, announce });
-      // Move focus to the first question so keyboard users aren't stranded.
       const firstOpt = container.querySelector('.opt');
       if (firstOpt) firstOpt.focus();
     });

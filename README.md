@@ -10,7 +10,8 @@ does **not** duplicate the temple's calendar, events, donations, or announcement
 
 - 🪔 21 festivals, each in **English, Telugu, Tamil, and Hindi**
 - 📖 Story · At the Temple · Why We Do This · Shloka (with transliteration & meaning)
-- 🧩 A short, accessible quiz for each festival and language
+- 🧩 A short, accessible quiz per festival — options **and** questions are shuffled
+  each attempt, so the correct answer isn't always in the same spot
 - 🎨 Decorative per-festival art (generated SVG banners in the temple palette)
 - 🔊 Optional read-aloud of the story using the browser's built-in voice (no cost, offline)
 - 📱 Mobile-first, installable (PWA), works offline once loaded
@@ -129,11 +130,23 @@ appears and opens it safely in a new tab. Leave it `""` to hide the button.
 
 Each festival shows a **🔊 Read aloud** button that speaks the story, rituals, and
 "why" using the browser's built-in **Web Speech API** — free, no API keys, no data
-sent anywhere, works offline, and follows the selected language. It appears only
-in browsers that support speech, offers play/pause/resume/stop, never autoplays,
-and pronunciation quality depends on the voices installed on the device. The
-**shloka's original text is deliberately not spoken** (TTS mispronounces Sanskrit/
-Tamil recitation) — use a human recording for that (see "How to add audio").
+sent anywhere, works offline, and follows the selected language. It offers
+play/pause/resume/stop and never autoplays.
+
+**Voice quality is device-dependent** (this is inherent to free browser TTS):
+
+- We request **Indian English (`en-IN`)** and pick the **most natural-sounding**
+  voice installed, preferring cloud/neural voices (e.g. Chrome's Google voices)
+  over robotic local ones. If your device only has a robotic system voice, that's
+  what you'll hear — installing better voices (or using Chrome online) improves it.
+- **Telugu/Tamil/Hindi** only work if that language's voice is installed. When it
+  isn't, the button is **disabled with an explanation** instead of failing
+  silently. Desktop browsers frequently lack Indic voices; Android/ChromeOS and
+  Chrome (online) tend to have them.
+- The **shloka's original text is deliberately not spoken** (TTS mispronounces
+  Sanskrit/Tamil recitation) — use a human recording for that (see "How to add
+  audio"). Truly studio-quality, guaranteed-accurate audio needs a paid cloud TTS
+  or human narration; that's a deliberate trade-off for zero cost.
 
 ## Festival art
 
